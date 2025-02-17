@@ -4,17 +4,35 @@ namespace studioespresso\buttondown\services;
 
 use craft\base\Component;
 use craft\helpers\App;
+use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use studioespresso\buttondown\Buttondown;
 
+/**
+ * Class BaseApiService
+ */
 class BaseApiService extends Component
 {
+    /**
+     * @var string|null
+     */
     private string|null $apiKey = null;
 
+    /**
+     * @var string
+     */
     private string $baseUrl = 'https://api.buttondown.email/v1/';
 
+    /**
+     * Error code for when a subscriber is already subscribed
+     */
+    private const CODE_ALREADY_SUBSCRIBED = 'email_already_exists';
+
+    /**
+     * @return void
+     */
     public function init(): void
     {
         $this->apiKey = App::parseEnv(Buttondown::getInstance()->getSettings()->apiKey);
@@ -22,6 +40,12 @@ class BaseApiService extends Component
     }
 
 
+    /**
+     * @param string $path
+     * @param array $data
+     * @return true|void
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function makeApiCall(string $path, array $data = [])
     {
         try {
@@ -39,8 +63,24 @@ class BaseApiService extends Component
                 return true;
             }
         } catch (ClientException|RequestException $e) {
-            \Craft::error($e, 'buttondown');
             throw $e;
         }
+    }
+
+    /**
+     * @param $e
+     * @return true
+     */
+    public function handleApiError($e)
+    {
+        $response = Json::decodeIfJson($e->getResponse()->getBody()->getContents());
+        \Craft::error($response["detail"], 'buttondown');
+        if ($e->getCode() === 400) {
+            if ($response['code'] === self::CODE_ALREADY_SUBSCRIBED) {
+                return true;
+            }
+        }
+
+        throw $e;
     }
 }
