@@ -1,7 +1,8 @@
 {
-  "name": "studioespresso/buttondown",
+  "name": "studioespresso/craft-buttondown",
   "description": "Buttondown integration",
   "type": "craft-plugin",
+  "version": "1.0.0",
   "license": "mit",
   "support": {
     "email": "support@studioespresso.co",
@@ -24,7 +25,7 @@
     }
   },
   "extra": {
-    "handle": "craft-buttondown",
+    "handle": "buttondown",
     "name": "Buttondown",
     "developer": "Studio Espresso",
     "documentationUrl": "https://github.com/studioespresso/craft-buttondown",
@@ -33,7 +34,9 @@
   "scripts": {
     "check-cs": "ecs check --ansi",
     "fix-cs": "ecs check --ansi --fix",
-    "phpstan": "phpstan --memory-limit=1G"
+    "phpstan": "phpstan --memory-limit=1G",
+    "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
+
   },
   "config": {
     "sort-packages": true,
