@@ -29,7 +29,9 @@ class SubscriberController extends Controller
     {
         $email = $this->request->getRequiredBodyParam('email');
         try {
-            $response = Buttondown::getInstance()->subscriber->add($email);
+            $fields = $this->request->getBodyParam('fields', []);
+            $tags = $this->request->getBodyParam('tags', []);
+            $response = Buttondown::getInstance()->subscriber->add($email, $fields, $tags);
             if (!$response) {
                 return $this->asFailure(\Craft::t("buttondown", "Something went wrong"), [
                     'email' => $email,
