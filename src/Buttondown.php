@@ -50,7 +50,7 @@ class Buttondown extends Plugin
 
     protected function settingsHtml(): ?string
     {
-        return Craft::$app->view->renderTemplate('craft-buttondown/_settings.twig', [
+        return Craft::$app->view->renderTemplate('buttondown/_settings.twig', [
             'plugin' => $this,
             'settings' => $this->getSettings(),
         ]);

@@ -1,6 +1,16 @@
 {# @var plugin \studioespresso\buttondown\Buttondown #}
 {# @var settings \studioespresso\buttondown\models\Settings #}
+{% from 'buttondown/_includes/_macros' import configWarning %}
 
 {% import '_includes/forms.twig' as forms %}
 
-{# ... #}
+{{ forms.autosuggestField({
+    label: 'API key'|t('buttondown'),
+    id: 'apiKey',
+    name: 'apiKey',
+    value: settings['apiKey'] is iterable  ? settings['apiKey']|json_encode : settings['apiKey'] ,
+    errors: settings.getErrors('apiKey'),
+    suggestEnvVars: not configWarning('apiKey', 'buttondown') ,
+    suggestAliases: true,
+    warning: configWarning('apiKey', 'buttondown')
+}) }}
