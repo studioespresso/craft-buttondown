@@ -6,12 +6,14 @@ use Craft;
 use craft\base\Model;
 use craft\base\Plugin;
 use studioespresso\buttondown\models\Settings;
+use studioespresso\buttondown\services\SubscriberService;
 
 /**
  * Buttondown plugin
  *
  * @method static Buttondown getInstance()
  * @method Settings getSettings()
+ * @property SubscriberService $subscriber
  * @author Studio Espresso <support@studioespresso.co>
  * @copyright Studio Espresso
  * @license MIT
@@ -25,7 +27,7 @@ class Buttondown extends Plugin
     {
         return [
             'components' => [
-                // Define component configs here...
+                'subscriber' => ['class' => SubscriberService::class],
             ],
         ];
     }
@@ -33,6 +35,7 @@ class Buttondown extends Plugin
     public function init(): void
     {
         parent::init();
+
 
         $this->attachEventHandlers();
 
