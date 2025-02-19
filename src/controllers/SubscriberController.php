@@ -12,12 +12,12 @@ use studioespresso\buttondown\Buttondown;
 class SubscriberController extends Controller
 {
     /**
-     * @var string
+     * @inheritdoc
      */
     public $defaultAction = 'add';
 
     /**
-     * @var array|bool|int
+     * @inheritdoc
      */
     protected array|bool|int $allowAnonymous = true;
 
