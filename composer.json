@@ -1,48 +1,47 @@
 {
-  "name": "studioespresso/craft-buttondown",
-  "description": "Buttondown integration",
-  "type": "craft-plugin",
-  "version": "1.0.0",
-  "license": "mit",
-  "support": {
-    "email": "support@studioespresso.co",
-    "issues": "https://github.com/studioespresso/craft-buttondown/issues?state=open",
-    "source": "https://github.com/studioespresso/craft-buttondown",
-    "docs": "https://github.com/studioespresso/craft-buttondown",
-    "rss": "https://github.com/studioespresso/craft-buttondown/releases.atom"
-  },
-  "require": {
-    "php": ">=8.2",
-    "craftcms/cms": "^5.6.0"
-  },
-  "require-dev": {
-    "craftcms/ecs": "dev-main",
-    "craftcms/phpstan": "dev-main"
-  },
-  "autoload": {
-    "psr-4": {
-      "studioespresso\\buttondown\\": "src/"
+    "name": "studioespresso/craft-buttondown",
+    "description": "Buttondown integration",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "license": "mit",
+    "support": {
+        "email": "support@studioespresso.co",
+        "issues": "https://github.com/studioespresso/craft-buttondown/issues?state=open",
+        "source": "https://github.com/studioespresso/craft-buttondown",
+        "docs": "https://github.com/studioespresso/craft-buttondown",
+        "rss": "https://github.com/studioespresso/craft-buttondown/releases.atom"
+    },
+    "require": {
+        "php": ">=8.2",
+        "craftcms/cms": "^5.6.0"
+    },
+    "require-dev": {
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "studioespresso\\buttondown\\": "src/"
+        }
+    },
+    "extra": {
+        "handle": "buttondown",
+        "name": "Buttondown",
+        "developer": "Studio Espresso",
+        "documentationUrl": "https://github.com/studioespresso/craft-buttondown",
+        "class": "studioespresso\\buttondown\\Buttondown"
+    },
+    "scripts": {
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix",
+        "phpstan": "phpstan --memory-limit=1G",
+        "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
     }
-  },
-  "extra": {
-    "handle": "buttondown",
-    "name": "Buttondown",
-    "developer": "Studio Espresso",
-    "documentationUrl": "https://github.com/studioespresso/craft-buttondown",
-    "class": "studioespresso\\buttondown\\Buttondown"
-  },
-  "scripts": {
-    "check-cs": "ecs check --ansi",
-    "fix-cs": "ecs check --ansi --fix",
-    "phpstan": "phpstan --memory-limit=1G",
-    "ci": "ecs check --ansi --fix && phpstan --memory-limit=1G"
-
-  },
-  "config": {
-    "sort-packages": true,
-    "allow-plugins": {
-      "yiisoft/yii2-composer": true,
-      "craftcms/plugin-installer": true
-    }
-  }
 }
