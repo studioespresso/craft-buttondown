@@ -13,7 +13,7 @@
     },
     "require": {
         "php": ">=8.5",
-        "craftcms/cms": "^6.0.0-alpha.1",
+        "craftcms/cms": "^6.0.0-alpha.4",
         "craftcms/yii2-adapter": "^6.0.0"
     },
     "require-dev": {
