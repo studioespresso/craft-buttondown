@@ -1,7 +1,7 @@
 # Release Notes for Buttondown
 
-## Unreleased
-### Changed
+## 6.0.0-alpha.2 - 2026-10-02
+### Added
 - Buttondown is now a native Craft 6 plugin, it no longer requires the yii2 adapter
 - API calls now use Laravel's HTTP client
 - Subscribe requests are validated, an invalid email address now returns a validation error

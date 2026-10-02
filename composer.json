@@ -2,7 +2,7 @@
     "name": "studioespresso/craft-buttondown",
     "description": "Buttondown integration",
     "type": "craft-plugin",
-    "version": "6.0.0-alpha.1",
+    "version": "6.0.0-alpha.2",
     "license": "mit",
     "support": {
         "email": "support@studioespresso.co",
@@ -13,7 +13,7 @@
     },
     "require": {
         "php": ">=8.5",
-        "craftcms/cms": "^6.0.0-alpha.4"
+        "craftcms/cms": "^6.0.0-alpha.19"
     },
     "require-dev": {
         "larastan/larastan": "^3.12",
