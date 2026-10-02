@@ -2,66 +2,40 @@
 
 namespace studioespresso\buttondown;
 
-use Craft;
-use craft\base\Model;
-use craft\base\Plugin;
+use CraftCms\Cms\Form\Controls\Text;
+use CraftCms\Cms\Form\Form;
+use CraftCms\Cms\Form\FormContext;
+use CraftCms\Cms\Form\Nodes\Field;
+use CraftCms\Cms\Plugin\Plugin;
+use CraftCms\Cms\Plugin\PluginSettings;
 use studioespresso\buttondown\models\Settings;
-use studioespresso\buttondown\services\SubscriberService;
+
+use function CraftCms\Cms\t;
 
 /**
  * Buttondown plugin
  *
- * @method static Buttondown getInstance()
  * @method Settings getSettings()
- * @property SubscriberService $subscriber
+ *
  * @author Studio Espresso <support@studioespresso.co>
  * @copyright Studio Espresso
  * @license MIT
  */
 class Buttondown extends Plugin
 {
-    public string $schemaVersion = '1.0.0';
     public bool $hasCpSettings = true;
 
-    public static function config(): array
+    protected static function createSettings(): ?PluginSettings
     {
-        return [
-            'components' => [
-                'subscriber' => ['class' => SubscriberService::class],
-            ],
-        ];
+        return new Settings;
     }
 
-    public function init(): void
+    public function settingsForm(FormContext $context = new FormContext): ?Form
     {
-        parent::init();
-
-
-        $this->attachEventHandlers();
-
-        // Any code that creates an element query or loads Twig should be deferred until
-        // after Craft is fully initialized, to avoid conflicts with other plugins/modules
-        Craft::$app->onInit(function() {
-            // ...
-        });
-    }
-
-    protected function createSettingsModel(): ?Model
-    {
-        return Craft::createObject(Settings::class);
-    }
-
-    protected function settingsHtml(): ?string
-    {
-        return Craft::$app->view->renderTemplate('buttondown/_settings.twig', [
-            'plugin' => $this,
-            'settings' => $this->getSettings(),
+        return Form::make([
+            Field::make(t('API key', category: 'buttondown'), Text::make('apiKey'))
+                ->instructions(t('Your Buttondown API key, or an environment variable like `$BUTTONDOWN_API_KEY`', category: 'buttondown'))
+                ->required(),
         ]);
-    }
-
-    private function attachEventHandlers(): void
-    {
-        // Register event handlers here ...
-        // (see https://craftcms.com/docs/5.x/extend/events.html to get started)
     }
 }

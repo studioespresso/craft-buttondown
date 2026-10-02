@@ -8,7 +8,7 @@ Note that the plugin is not affiliated with Buttondown in any way - I personally
 
 
 ## Requirements
-This plugin requires Craft CMS 5.6.0 or later.
+This plugin requires Craft CMS 6.0.0 or later and PHP 8.5.
 
 
 ## Installation
@@ -24,12 +24,20 @@ cd /path/to/my-craft-project.dev
 composer require studioespresso/craft-buttondown
 
 # tell Craft to install the plugin
-./craft install/plugin buttondown
+php craft plugin/install buttondown
 ```
 
 ### Usage
 
 The plugins needs an API key to connect to Buttondown. You can find your API key in your Buttondown account settings.
+
+Set it in the plugin settings (environment variables like `$BUTTONDOWN_API_KEY` are supported), or override it in `config/craft/buttondown.php`:
+
+```php
+return [
+    'apiKey' => env('BUTTONDOWN_API_KEY'),
+];
+```
 
 #### Basic subscriber form
 

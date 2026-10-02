@@ -2,12 +2,19 @@
 
 namespace studioespresso\buttondown\models;
 
-use craft\base\Model;
+use CraftCms\Cms\Plugin\PluginSettings;
 
 /**
  * Buttondown settings
  */
-class Settings extends Model
+class Settings extends PluginSettings
 {
-    public null|string $apiKey = null;
+    public ?string $apiKey = null;
+
+    public function getRules(): array
+    {
+        return [
+            'apiKey' => ['required', 'string'],
+        ];
+    }
 }

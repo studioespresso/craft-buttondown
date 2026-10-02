@@ -2,50 +2,34 @@
 
 namespace studioespresso\buttondown\controllers;
 
-use craft\web\Controller;
-use GuzzleHttp\Exception\GuzzleException;
-use studioespresso\buttondown\Buttondown;
+use CraftCms\Cms\Http\RespondsWithFlash;
+use Illuminate\Http\Request;
+use studioespresso\buttondown\services\SubscriberService;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- *  Class SubscriberController
- */
-class SubscriberController extends Controller
+use function CraftCms\Cms\t;
+
+class SubscriberController
 {
-    /**
-     * @inheritdoc
-     */
-    public $defaultAction = 'add';
+    use RespondsWithFlash;
 
-    /**
-     * @inheritdoc
-     */
-    protected array|bool|int $allowAnonymous = true;
-
-    /**
-     * @return \yii\web\Response|null
-     * @throws \yii\web\BadRequestHttpException
-     */
-    public function actionAdd()
+    public function __invoke(Request $request, SubscriberService $subscribers): Response
     {
-        $email = $this->request->getRequiredBodyParam('email');
-        try {
-            $fields = $this->request->getBodyParam('fields', []);
-            $tags = $this->request->getBodyParam('tags', []);
-            $response = Buttondown::getInstance()->subscriber->add($email, $fields, $tags);
-            if (!$response) {
-                return $this->asFailure(\Craft::t("buttondown", "Something went wrong"), [
-                    'email' => $email,
-                ]);
-            }
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            'fields' => ['array'],
+            'tags' => ['array'],
+            'tags.*' => ['string'],
+        ]);
 
-            return $this->asSuccess(\Craft::t('buttondown', 'Subscribed!'), [
-                'email' => $email,
-            ]);
-        } catch (GuzzleException $e) {
-            \Craft::error($e->getMessage(), 'buttondown');
-            return $this->asFailure(\Craft::t("buttondown", "Something went wrong"), [
-                'email' => $email,
+        if (! $subscribers->add($data['email'], $data['fields'] ?? [], $data['tags'] ?? [])) {
+            return $this->asFailure(t('Something went wrong', category: 'buttondown'), [
+                'email' => $data['email'],
             ]);
         }
+
+        return $this->asSuccess(t('Subscribed!', category: 'buttondown'), [
+            'email' => $data['email'],
+        ]);
     }
 }
