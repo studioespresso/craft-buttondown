@@ -18,7 +18,8 @@ class SubscriberService extends BaseApiService
         try {
             return $this->makeApiCall('subscribers', [
                 'email_address' => $email,
-                'metadata' => $fields,
+                // Cast so an empty array is sent as {}: Buttondown rejects metadata `[]` with a 422
+                'metadata' => (object)$fields,
                 'tags' => $tags,
             ]);
         } catch (GuzzleException $e) {
