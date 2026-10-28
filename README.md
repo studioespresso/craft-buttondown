@@ -31,6 +31,21 @@ composer require studioespresso/craft-buttondown
 
 The plugins needs an API key to connect to Buttondown. You can find your API key in your Buttondown account settings.
 
+#### Multi-site: one newsletter per site
+
+Buttondown API keys belong to one newsletter. To send each site's subscribers to its own newsletter, set ``apiKey`` per site handle in ``config/buttondown.php``. Sites without their own key use ``default``:
+
+````php
+<?php
+
+return [
+    'apiKey' => [
+        'default' => '$BUTTONDOWN_API_KEY',
+        'mySiteHandle' => '$BUTTONDOWN_OTHER_NEWSLETTER_KEY',
+    ],
+];
+````
+
 #### Basic subscriber form
 
 In the simplest form, you only need an input called ``email``, you can post that to the ``buttondown/subscriber`` controller:

@@ -3,7 +3,6 @@
 namespace studioespresso\buttondown\services;
 
 use craft\base\Component;
-use craft\helpers\App;
 use craft\helpers\Json;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -16,29 +15,14 @@ use studioespresso\buttondown\Buttondown;
 class BaseApiService extends Component
 {
     /**
-     * @var string|null
-     */
-    private string|null $apiKey = null;
-
-    /**
      * @var string
      */
-    private string $baseUrl = 'https://api.buttondown.email/v1/';
+    private string $baseUrl = 'https://api.buttondown.com/v1/';
 
     /**
      * Error code for when a subscriber is already subscribed
      */
     private const CODE_ALREADY_SUBSCRIBED = 'email_already_exists';
-
-    /**
-     * @return void
-     */
-    public function init(): void
-    {
-        $this->apiKey = App::parseEnv(Buttondown::getInstance()->getSettings()->apiKey);
-        parent::init();
-    }
-
 
     /**
      * @param string $path
@@ -51,7 +35,8 @@ class BaseApiService extends Component
         try {
             $client = new Client(['base_uri' => $this->baseUrl]);
             $headers = [
-                'Authorization' => 'Token ' . $this->apiKey,
+                // Resolved per call: the key can differ per site
+                'Authorization' => 'Token ' . Buttondown::getInstance()->getSettings()->getApiKey(),
                 'Content-Type' => 'application/json',
             ];
             // Send POST request to create a draft email
