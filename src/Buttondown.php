@@ -2,10 +2,10 @@
 
 namespace studioespresso\buttondown;
 
-use CraftCms\Cms\Form\Controls\Text;
-use CraftCms\Cms\Form\Form;
-use CraftCms\Cms\Form\FormContext;
-use CraftCms\Cms\Form\Nodes\Field;
+use CraftCms\Cms\Ui\Controls\Text;
+use CraftCms\Cms\Ui\Ui;
+use CraftCms\Cms\Ui\UiContext;
+use CraftCms\Cms\Ui\Nodes\Field;
 use CraftCms\Cms\Plugin\Plugin;
 use CraftCms\Cms\Plugin\PluginSettings;
 use studioespresso\buttondown\models\Settings;
@@ -30,9 +30,9 @@ class Buttondown extends Plugin
         return new Settings;
     }
 
-    public function settingsForm(FormContext $context = new FormContext): ?Form
+    public function settingsUi(UiContext $context = new UiContext): ?Ui
     {
-        return Form::make([
+        return Ui::make([
             Field::make(t('API key', category: 'buttondown'), Text::make('apiKey'))
                 ->instructions(t('Your Buttondown API key, or an environment variable like `$BUTTONDOWN_API_KEY`', category: 'buttondown'))
                 ->required(),
